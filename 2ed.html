@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title> - jsFiddle demo</title>
+  
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.8.3.js'></script>
+  
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+  <style type='text/css'>
+    /* Normalize */
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+audio[controls], canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; margin: 0; padding: 0; }
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+svg:not(:root) { overflow: hidden; }
+html, body, form, fieldset { border: 0; margin: 0; padding: 0; }
+legend { border: 0; *margin-left: -7px; padding: 0; }
+label { cursor: pointer; }
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+button, input { line-height: normal; *overflow: visible; }
+table button, table input { *overflow: auto; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
+input[type="search"] { -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; } 
+textarea { overflow: auto; vertical-align: top; resize: vertical; }
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+table { border-collapse: collapse; border-spacing: 0; }
+q { quotes: none; }
+q:before, q:after { content: ""; content: none; }
+
+.board {
+    position: relative;
+    height: 2175px;
+    width: 1464px;
+    background: url(http://cf.geekdo-images.com/images/pic1450365.png);
+}
+
+.order-march-0,
+.order-march-1,
+.order-march-2,
+.order-defend-1,
+.order-defend-2,
+.order-support-1,
+.order-support-2,
+.order-raid-1,
+.order-raid-2,
+.order-power-1,
+.order-power-2,
+
+.garrison,
+
+.wildlingmarker,
+.round,
+
+.token-lannister,
+.token-stark,
+.token-baratheon,
+.token-greyjoy,
+.token-tyrell,
+.token-martell,
+
+.powertoken-lannister,
+.powertoken-stark,
+.powertoken-baratheon,
+.powertoken-greyjoy,
+.powertoken-tyrell,
+.powertoken-martell,
+
+.supply-lannister,
+.supply-stark,
+.supply-baratheon,
+.supply-greyjoy,
+.supply-tyrell,
+.supply-martell,
+
+.victory-lannister,
+.victory-stark,
+.victory-baratheon,
+.victory-greyjoy,
+.victory-tyrell,
+.victory-martell,
+
+.routed-footman-lannister,
+.routed-footman-stark,
+.routed-footman-baratheon,
+.routed-footman-greyjoy,
+.routed-footman-tyrell,
+.routed-footman-martell,
+.footman-lannister,
+.footman-stark,
+.footman-baratheon,
+.footman-greyjoy,
+.footman-tyrell,
+.footman-martell,
+
+.routed-knight-lannister,
+.routed-knight-stark,
+.routed-knight-baratheon,
+.routed-knight-greyjoy,
+.routed-knight-tyrell,
+.routed-knight-martell,
+.knight-lannister,
+.knight-stark,
+.knight-baratheon,
+.knight-greyjoy,
+.knight-tyrell,
+.knight-martell,
+
+.routed-ship-lannister,
+.routed-ship-stark,
+.routed-ship-baratheon,
+.routed-ship-greyjoy,
+.routed-ship-tyrell,
+.routed-ship-martell,
+.ship-lannister,
+.ship-stark,
+.ship-baratheon,
+.ship-greyjoy,
+.ship-tyrell,
+.ship-martell,
+
+.routed-siege-lannister,
+.routed-siege-stark,
+.routed-siege-baratheon,
+.routed-siege-greyjoy,
+.routed-siege-tyrell,
+.routed-siege-martell,
+.siege-lannister,
+.siege-stark,
+.siege-baratheon,
+.siege-greyjoy,
+.siege-tyrell,
+.siege-martell {
+    background: url(http://cf.geekdo-images.com/images/pic1450363.png) no-repeat;
+    width: 62px;
+    height: 62px;
+    position: absolute;
+    z-index: 20;
+    margin-left: -31px;
+    margin-top: -31px;
+}
+
+.routed-footman-lannister,
+.routed-footman-stark,
+.routed-footman-baratheon,
+.routed-footman-greyjoy,
+.routed-footman-tyrell,
+.routed-footman-martell,
+
+.routed-knight-lannister,
+.routed-knight-stark,
+.routed-knight-baratheon,
+.routed-knight-greyjoy,
+.routed-knight-tyrell,
+.routed-knight-martell,
+
+.routed-ship-lannister,
+.routed-ship-stark,
+.routed-ship-baratheon,
+.routed-ship-greyjoy,
+.routed-ship-tyrell,
+.routed-ship-martell,
+
+.routed-siege-lannister,
+.routed-siege-stark,
+.routed-siege-baratheon,
+.routed-siege-greyjoy,
+.routed-siege-tyrell,
+.routed-siege-martell {
+    background-color: rgba(0, 0, 0, .7);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .7);
+    border-radius: 50%;
+}
+
+.order-march-0 {
+    background-position: 0 0;
+}
+.order-march-1 {
+    background-position: -62px 0;
+}
+.order-march-2 {
+    background-position: -124px 0;
+}
+.order-defend-1 {
+    background-position: -186px 0;
+}
+.order-defend-2 {
+    background-position: -248px 0;
+}
+.order-support-1 {
+    background-position: -310px 0;
+}
+.order-support-2 {
+    background-position: -372px 0;
+}
+.order-raid-1 {
+    background-position: -434px 0;
+}
+.order-raid-2 {
+    background-position: -496px 0;
+}
+.order-power-1 {
+    background-position: -558px 0;
+}
+.order-power-2 {
+    background-position: -620px 0;
+}
+
+.garrison {
+    border-radius: 0 0 50% 50%;
+    background: #000;
+    background: -webkit-linear-gradient(left, #000, #666);
+    background: -moz-linear-gradient(left, #000, #666);
+    background: -o-linear-gradient(left, #000, #666);
+    background: linear-gradient(left, #000, #666);
+    width: 30px;
+    height: 30px;
+    margin-left: 0;
+    margin-top: -15px;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    border: 2px solid silver;
+    box-shadow: 5px 5px 10px #000;
+    z-index: 23;
+}
+.garrison:before {
+    content: attr(data-value);
+}
+.wildlingmarker {
+    background-position: -682px 0;
+}
+.round {
+    background: url(http://cf.geekdo-images.com/images/pic1450366.png) no-repeat;
+    background-size: contain;
+}
+
+.token-lannister {
+    background-position: 0 -62px;
+}
+.token-stark {
+    background-position: -62px -62px;
+}
+.token-baratheon {
+    background-position: -124px -62px;
+}
+.token-greyjoy {
+    background-position: -186px -62px;
+}
+.token-tyrell {
+    background-position: -248px -62px;
+}
+.token-martell {
+    background-position: -310px -62px;
+}
+
+.powertoken-lannister {
+    background-position: 0 -124px;
+}
+.powertoken-stark {
+    background-position: -62px -124px;
+}
+.powertoken-baratheon {
+    background-position: -124px -124px;
+}
+.powertoken-greyjoy {
+    background-position: -186px -124px;
+}
+.powertoken-tyrell {
+    background-position: -248px -124px;
+}
+.powertoken-martell {
+    background-position: -310px -124px;
+}
+
+.supply-lannister {
+    background-position: 0px -186px;
+}
+.supply-stark {
+    background-position: -62px -186px;
+}
+.supply-baratheon {
+    background-position: -124px -186px;
+}
+.supply-greyjoy {
+    background-position: -186px -186px;
+}
+.supply-tyrell {
+    background-position: -248px -186px;
+}
+.supply-martell {
+    background-position: -310px -186px;
+}
+
+.victory-lannister {
+    background-position: 0 -248px;
+}
+.victory-stark {
+    background-position: -62px -248px;
+}
+.victory-baratheon {
+    background-position: -124px -248px;
+}
+.victory-greyjoy {
+    background-position: -186px -248px;
+}
+.victory-tyrell {
+    background-position: -248px -248px;
+}
+.victory-martell {
+    background-position: -310px -248px;
+}
+
+.routed-footman-lannister,
+.footman-lannister {
+    background-position: -372px -62px;
+}
+.routed-footman-stark,
+.footman-stark {
+    background-position: -372px -124px;
+}
+.routed-footman-baratheon,
+.footman-baratheon {
+    background-position: -372px -186px;
+}
+.routed-footman-greyjoy,
+.footman-greyjoy {
+    background-position: -372px -248px;
+}
+.routed-footman-tyrell,
+.footman-tyrell {
+    background-position: -620px -62px;
+}
+.routed-footman-martell,
+.footman-martell {
+    background-position: -682px -62px;
+}
+
+.routed-knight-lannister,
+.knight-lannister {
+    background-position: -434px -62px;
+}
+.routed-knight-stark,
+.knight-stark {
+    background-position: -434px -124px;
+}
+.routed-knight-baratheon,
+.knight-baratheon {
+    background-position: -434px -186px;
+}
+.routed-knight-greyjoy,
+.knight-greyjoy {
+    background-position: -434px -248px;
+}
+.routed-knight-tyrell,
+.knight-tyrell {
+    background-position: -620px -124px;
+}
+.routed-knight-martell,
+.knight-martell {
+    background-position: -682px -124px;
+}
+
+.routed-ship-lannister,
+.ship-lannister {
+    background-position: -496px -62px;
+}
+.routed-ship-stark,
+.ship-stark {
+    background-position: -496px -124px;
+}
+.routed-ship-baratheon,
+.ship-baratheon {
+    background-position: -496px -186px;
+}
+.routed-ship-greyjoy,
+.ship-greyjoy {
+    background-position: -496px -248px;
+}
+.routed-ship-tyrell,
+.ship-tyrell {
+    background-position: -620px -186px;
+}
+.routed-ship-martell,
+.ship-martell {
+    background-position: -682px -186px;
+}
+
+.siege-lannister {
+    background-position: -558px -62px;
+}
+.siege-stark {
+    background-position: -558px -124px;
+}
+.siege-baratheon {
+    background-position: -558px -186px;
+}
+.siege-greyjoy {
+    background-position: -558px -248px;
+}
+.siege-tyrell {
+    background-position: -620px -248px;
+}
+.siege-martell {
+    background-position: -682px -248px;
+}
+
+.pos-throne-1 {
+    left: 80%;
+    top: 29.65%;
+}
+.pos-throne-2 {
+    left: 80%;
+    top: 24.65%;
+}
+.pos-throne-3 {
+    left: 80%;
+    top: 19.4%;
+}
+.pos-throne-4 {
+    left: 80%;
+    top: 14.4%;
+}
+.pos-throne-5 {
+    left: 80%;
+    top: 9.3%;
+}
+.pos-throne-6 {
+    left: 80%;
+    top: 4.2%;
+}
+.pos-fiefdom-1 {
+    left: 87.4%;
+    top: 29.65%;
+}
+.pos-fiefdom-2 {
+    left: 87.4%;
+    top: 24.65%;
+}
+.pos-fiefdom-3 {
+    left: 87.4%;
+    top: 19.4%;
+}
+.pos-fiefdom-4 {
+    left: 87.4%;
+    top: 14.4%;
+}
+.pos-fiefdom-5 {
+    left: 87.4%;
+    top: 9.3%;
+}
+.pos-fiefdom-6 {
+    left: 87.4%;
+    top: 4.2%;
+}
+.pos-court-1 {
+    left: 94.8%;
+    top: 29.65%;
+}
+.pos-court-2 {
+    left: 94.8%;
+    top: 24.65%;
+}
+.pos-court-3 {
+    left: 94.8%;
+    top: 19.4%;
+}
+.pos-court-4 {
+    left: 94.8%;
+    top: 14.4%;
+}
+.pos-court-5 {
+    left: 94.8%;
+    top: 9.3%;
+}
+.pos-court-6 {
+    left: 94.8%;
+    top: 4.2%;
+}
+.pos-supply-0 {
+    left: 84.7%;
+    top: 63%;
+}
+.pos-supply-1 {
+    left: 84.7%;
+    top: 59.7%;
+}
+.pos-supply-2 {
+    left: 84.7%;
+    top: 56.4%;
+}
+.pos-supply-3 {
+    left: 84.7%;
+    top: 53.1%;
+}
+.pos-supply-4 {
+    left: 84.7%;
+    top: 49.8%;
+}
+.pos-supply-5 {
+    left: 84.7%;
+    top: 46.6%;
+}
+.pos-supply-6 {
+    left: 84.7%;
+    top: 43.4%;
+}
+.pos-victory-1 {
+    left: 93.8%;
+    top: 96.9%;
+}
+.pos-victory-2 {
+    left: 93.8%;
+    top: 92.4%;
+}
+.pos-victory-3 {
+    left: 93.8%;
+    top: 88%;
+}
+.pos-victory-4 {
+    left: 93.8%;
+    top: 83.5%;
+}
+.pos-victory-5 {
+    left: 93.8%;
+    top: 79.1%;
+}
+.pos-victory-6 {
+    left: 93.8%;
+    top: 74.6%;
+}
+.pos-victory-7 {
+    left: 93.8%;
+    top: 70%;
+}
+.pos-wilding-0 {
+    left: 21.3%;
+    top: 3.72%;
+}
+.pos-wilding-2 {
+    left: 26.5%;
+    top: 3.72%;
+}
+.pos-wilding-4 {
+    left: 31.7%;
+    top: 3.72%;
+}
+.pos-wilding-6 {
+    left: 36.9%;
+    top: 3.72%;
+}
+.pos-wilding-8 {
+    left: 42%;
+    top: 3.72%;
+}
+.pos-wilding-10 {
+    left: 47.2%;
+    top: 3.72%;
+}
+.pos-wilding-12 {
+    left: 52.3%;
+    top: 3.72%;
+}
+.pos-round-1 {
+    left: 83%;
+    top: 97%;
+}
+.pos-round-2 {
+    left: 83%;
+    top: 94%;
+}
+.pos-round-3 {
+    left: 83%;
+    top: 91%;
+}
+.pos-round-4 {
+    left: 83%;
+    top: 88%;
+}
+.pos-round-5 {
+    left: 83%;
+    top: 85%;
+}
+.pos-round-6 {
+    left: 83%;
+    top: 82.5%;
+}
+.pos-round-7 {
+    left: 83%;
+    top: 79.5%;
+}
+.pos-round-8 {
+    left: 83%;
+    top: 76.5%;
+}
+.pos-round-9 {
+    left: 83%;
+    top: 73.5%;
+}
+.pos-round-10 {
+    left: 83%;
+    top: 70.5%;
+}
+.pos-victory-1 ~ .pos-victory-1,
+.pos-victory-2 ~ .pos-victory-2,
+.pos-victory-3 ~ .pos-victory-3,
+.pos-victory-4 ~ .pos-victory-4,
+.pos-victory-5 ~ .pos-victory-5,
+.pos-victory-6 ~ .pos-victory-6,
+.pos-victory-7 ~ .pos-victory-7,
+.pos-supply-0 ~ .pos-supply-0,
+.pos-supply-1 ~ .pos-supply-1,
+.pos-supply-2 ~ .pos-supply-2,
+.pos-supply-3 ~ .pos-supply-3,
+.pos-supply-4 ~ .pos-supply-4,
+.pos-supply-5 ~ .pos-supply-5,
+.pos-supply-6 ~ .pos-supply-6 {
+    margin-left: -62px;
+    margin-top: -47px;
+    z-index: 15;
+}
+.pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1,
+.pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2,
+.pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3,
+.pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4,
+.pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5,
+.pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6,
+.pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7,
+.pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0,
+.pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1,
+.pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2,
+.pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3,
+.pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4,
+.pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5,
+.pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 {
+    margin-left: -62px;
+    margin-top: -19px;
+}
+.pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1,
+.pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2,
+.pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3,
+.pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4,
+.pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5,
+.pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6,
+.pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7,
+.pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0,
+.pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1,
+.pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2,
+.pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3,
+.pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4,
+.pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5,
+.pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 {
+    margin-left: -20px;
+    margin-top: 0px;
+}
+.pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1,
+.pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2,
+.pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3,
+.pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4,
+.pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5,
+.pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6,
+.pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7,
+.pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0,
+.pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1,
+.pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2,
+.pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3,
+.pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4,
+.pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5,
+.pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 {
+    margin-left: -20px;
+    margin-top: -62px;
+}
+.pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1 ~ .pos-victory-1,
+.pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2 ~ .pos-victory-2,
+.pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3 ~ .pos-victory-3,
+.pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4 ~ .pos-victory-4,
+.pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5 ~ .pos-victory-5,
+.pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6 ~ .pos-victory-6,
+.pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7 ~ .pos-victory-7,
+.pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0 ~ .pos-supply-0,
+.pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1 ~ .pos-supply-1,
+.pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2 ~ .pos-supply-2,
+.pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3 ~ .pos-supply-3,
+.pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4 ~ .pos-supply-4,
+.pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5 ~ .pos-supply-5,
+.pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 ~ .pos-supply-6 {
+    margin-left: 0px;
+    margin-top: -31px;
+    z-index: 25;
+}
+
+.unit {
+    margin-left: -21px;
+    margin-top: -52px;
+    -webkit-transition: opacity .5s ease;
+    -moz-transition: opacity .5s ease;
+    -o-transition: opacity .5s ease;
+    transition: opacity .5s ease;
+}
+.pos-castleblack {
+    top: 11%;
+    left: 46%;
+}
+.pos-winterfell {
+    top: 31%;
+    left: 33%;
+}
+.pos-winterfell-harbor {
+    top: 17%;
+    left: 21%;
+}
+.pos-karhold {
+    top: 19%;
+    left: 58%;
+}
+.pos-stonyshore {
+    top: 29%;
+    left: 22%;
+}
+.pos-whiteharbor {
+    top: 28%;
+    left: 44%;
+}
+.pos-whiteharbor-harbor {
+    top: 36%;
+    left: 46%;
+}
+.pos-widowswatch {
+    top: 28%;
+    left: 54%;
+}
+.pos-flintsfinger {
+    top: 39%;
+    left: 18%;
+}
+.pos-greywaterwatch {
+    top: 38%;
+    left: 26%;
+}
+.pos-moatcailin {
+    top: 42%;
+    left: 33%;
+}
+.pos-dragonstone {
+    top: 60%;
+    left: 67%;
+}
+.pos-dragonstone-harbor {
+    top: 65%;
+    left: 71%;
+}
+.pos-kingswood {
+    top: 71%;
+    left: 54%;
+}
+
+.pos-bayofice {
+    top: 32%;
+    left: 5%;
+}
+.pos-shiveringsea {
+    top: 27%;
+    left: 64%;
+}
+.pos-narrowsea {
+    top: 41%;
+    left: 70%;
+}
+.pos-shipbreakerbay {
+    top: 74%;
+    left: 70%;
+}
+/*****************************************/
+.pos-sunsetsea {
+    top: 67.5%;
+    left: 7%;
+}
+.pos-goldensound {
+    top: 61%;
+    left: 8%;
+}
+.pos-lannisport {
+    top: 60%;
+    left: 20%;
+}
+.pos-lannisport-harbor {
+    top: 59%;
+    left: 14%;
+}
+.pos-stoneysept {
+    top: 59%;
+    left: 32%;
+}
+.pos-harrenhal {
+    top: 58%;
+    left: 40%;
+}
+.pos-riverrun {
+    top: 53%;
+    left: 31%;
+}
+.pos-searoadmarches {
+    top: 66%;
+    left: 19%;
+}
+.pos-blackwater {
+    top: 66%;
+    left: 39%;
+}
+.pos-reach {
+    top: 74%;
+    left: 29%;
+}
+.pos-seagard {
+    top: 48%;
+    left: 30%;
+}
+.pos-ironmansbay {
+    top: 53%;
+    left: 7%;
+}
+/*****************************************/
+.pos-pyke {
+    top: 47%;
+    left: 12%;
+}
+.pos-pyke-harbor {
+    top: 47%;
+    left: 18%;
+}
+/*****************************************/
+.pos-highgarden {
+    top: 77%;
+    left: 20%;
+}
+.pos-dornishmarches {
+    top: 79%;
+    left: 29%;
+}
+.pos-oldtown {
+    top: 84%;
+    left: 16%;
+}
+.pos-oldtown-harbor {
+    top: 81%;
+    left: 10%;
+}
+.pos-redwynestraights {
+    top: 87%;
+    left: 6%;
+}
+.pos-sunspear {
+    top: 89%;
+    left: 58%;
+}
+.pos-sunspear-harbor {
+    top: 90%;
+    left: 67%;
+}
+.pos-saltshore {
+    top: 92%;
+    left: 43%;
+}
+.pos-seaofdorne {
+    top: 85%;
+    left: 60%;
+}
+/*****************************************/
+.pos-blackwaterbay {
+    top: 64%;
+    left: 58%;
+}
+.pos-eastsummersea {
+    top: 96%;
+    left: 69%;
+}
+.pos-westsummersea {
+    top: 74%;
+    left: 5%;
+}
+.pos-arbor {
+    top: 94%;
+    left: 9%;
+}
+.pos-boneway {
+    top: 81%;
+    left: 41%;
+}
+.pos-princespass {
+    top: 84%;
+    left: 29%;
+}
+.pos-yronwood {
+    top: 88%;
+    left: 40%;
+}
+.pos-stormsend {
+    top: 77%;
+    left: 53%;
+}
+.pos-stormsend-harbor {
+    top: 77%;
+    left: 60%;
+}
+.pos-starfall {
+    top: 92%;
+    left: 32%;
+}
+/*****************************************/
+.pos-stoneyshore {
+    top: 32%;
+    left: 18%;
+}
+/*****************************************/
+.pos-twins {
+    top: 47%;
+    left: 38%;
+}
+.pos-fingers {
+    top: 44%;
+    left: 51%;
+}
+.pos-mountainsofthemoon {
+    top: 48%;
+    left: 57%;
+}
+.pos-eyrie {
+    top: 53%;
+    left: 56%;
+}
+.pos-crackclawpoint {
+    top: 60%;
+    left: 51%;
+}
+.pos-kingslanding {
+    top: 67%;
+    left: 48%;
+}
+.pos-threetowers {
+    top: 88%;
+    left: 22%;
+}
+
+.unit.pos-twins ~ .unit.pos-twins,
+.unit.pos-fingers ~ .unit.pos-fingers,
+.unit.pos-mountainsofthemoon ~ .unit.pos-mountainsofthemoon,
+.unit.pos-eyrie ~ .unit.pos-eyrie,
+.unit.pos-crackclawpoint ~ .unit.pos-crackclawpoint,
+.unit.pos-kingslanding ~ .unit.pos-kingslanding,
+.unit.pos-threetowers ~ .unit.pos-threetowers,
+
+.unit.pos-stoneyshore ~ .unit.pos-stoneyshore,
+
+.unit.pos-blackwaterbay ~ .unit.pos-blackwaterbay,
+.unit.pos-eastsummersea ~ .unit.pos-eastsummersea,
+.unit.pos-westsummersea ~ .unit.pos-westsummersea,
+.unit.pos-arbor ~ .unit.pos-arbor,
+.unit.pos-boneway ~ .unit.pos-boneway,
+.unit.pos-princespass ~ .unit.pos-princespass,
+.unit.pos-yronwood ~ .unit.pos-yronwood,
+.unit.pos-stormsend ~ .unit.pos-stormsend,
+.unit.pos-stormsend-harbor ~ .unit.pos-stormsend-harbor,
+.unit.pos-starfall ~ .unit.pos-starfall,
+
+.unit.pos-highgarden ~ .unit.pos-highgarden,
+.unit.pos-dornishmarches ~ .unit.pos-dornishmarches,
+.unit.pos-oldtown ~ .unit.pos-oldtown,
+.unit.pos-oldtown-harbor ~ .unit.pos-oldtown-harbor,
+.unit.pos-redwynestraights ~ .unit.pos-redwynestraights,
+.unit.pos-sunspear ~ .unit.pos-sunspear,
+.unit.pos-sunspear-harbor ~ .unit.pos-sunspear-harbor,
+.unit.pos-saltshore ~ .unit.pos-saltshore,
+.unit.pos-seaofdorne ~ .unit.pos-seaofdorne,
+
+.unit.pos-pyke ~ .unit.pos-pyke,
+.unit.pos-pyke-harbor ~ .unit.pos-pyke-harbor,
+
+.unit.pos-sunsetsea ~ .unit.pos-sunsetsea,
+.unit.pos-goldensound ~ .unit.pos-goldensound,
+.unit.pos-lannisport ~ .unit.pos-lannisport,
+.unit.pos-lannisport-harbor ~ .unit.pos-lannisport-harbor,
+.unit.pos-stoneysept ~ .unit.pos-stoneysept,
+.unit.pos-harrenhal ~ .unit.pos-harrenhal,
+.unit.pos-riverrun ~ .unit.pos-riverrun,
+.unit.pos-searoadmarches ~ .unit.pos-searoadmarches,
+.unit.pos-blackwater ~ .unit.pos-blackwater,
+.unit.pos-reach ~ .unit.pos-reach,
+.unit.pos-seagard ~ .unit.pos-seagard,
+.unit.pos-ironmansbay ~ .unit.pos-ironmansbay,
+
+.unit.pos-winterfell-harbor ~ .unit.pos-winterfell-harbor,
+.unit.pos-karhold ~ .unit.pos-karhold,
+.unit.pos-stonyshore ~ .unit.pos-stonyshore,
+.unit.pos-whiteharbor ~ .unit.pos-whiteharbor,
+.unit.pos-whiteharbor-harbor ~ .unit.pos-whiteharbor-harbor,
+.unit.pos-widowswatch ~ .unit.pos-widowswatch,
+.unit.pos-flintsfinger ~ .unit.pos-flintsfinger,
+.unit.pos-greywaterwatch ~ .unit.pos-greywaterwatch,
+.unit.pos-moatcailin ~ .unit.pos-moatcailin,
+.unit.pos-dragonstone ~ .unit.pos-dragonstone,
+.unit.pos-dragonstone-harbor ~ .unit.pos-dragonstone-harbor,
+.unit.pos-kingswood ~ .unit.pos-kingswood,
+.unit.pos-bayofice ~ .unit.pos-bayofice,
+.unit.pos-shiveringsea ~ .unit.pos-shiveringsea,
+.unit.pos-narrowsea ~ .unit.pos-narrowsea,
+.unit.pos-shipbreakerbay ~ .unit.pos-shipbreakerbay,
+.unit.pos-winterfell ~ .unit.pos-winterfell,
+.unit.pos-castleblack ~ .unit.pos-castleblack {
+    margin-left: -42px;
+    margin-top: -10px;
+    z-index: 30;
+}
+.unit.pos-twins ~ .unit.pos-twins ~ .unit.pos-twins,
+.unit.pos-fingers ~ .unit.pos-fingers ~ .unit.pos-fingers,
+.unit.pos-mountainsofthemoon ~ .unit.pos-mountainsofthemoon ~ .unit.pos-mountainsofthemoon,
+.unit.pos-eyrie ~ .unit.pos-eyrie ~ .unit.pos-eyrie,
+.unit.pos-crackclawpoint ~ .unit.pos-crackclawpoint ~ .unit.pos-crackclawpoint,
+.unit.pos-kingslanding ~ .unit.pos-kingslanding ~ .unit.pos-kingslanding,
+.unit.pos-threetowers ~ .unit.pos-threetowers ~ .unit.pos-threetowers,
+
+.unit.pos-stoneyshore ~ .unit.pos-stoneyshore ~ .unit.pos-stoneyshore,
+
+.unit.pos-blackwaterbay ~ .unit.pos-blackwaterbay ~ .unit.pos-blackwaterbay,
+.unit.pos-eastsummersea ~ .unit.pos-eastsummersea ~ .unit.pos-eastsummersea,
+.unit.pos-westsummersea ~ .unit.pos-westsummersea ~ .unit.pos-westsummersea,
+.unit.pos-arbor ~ .unit.pos-arbor ~ .unit.pos-arbor,
+.unit.pos-boneway ~ .unit.pos-boneway ~ .unit.pos-boneway,
+.unit.pos-princespass ~ .unit.pos-princespass ~ .unit.pos-princespass,
+.unit.pos-yronwood ~ .unit.pos-yronwood ~ .unit.pos-yronwood,
+.unit.pos-stormsend ~ .unit.pos-stormsend ~ .unit.pos-stormsend,
+.unit.pos-stormsend-harbor ~ .unit.pos-stormsend-harbor ~ .unit.pos-stormsend-harbor,
+.unit.pos-starfall ~ .unit.pos-starfall ~ .unit.pos-starfall,
+
+.unit.pos-highgarden ~ .unit.pos-highgarden ~ .unit.pos-highgarden,
+.unit.pos-dornishmarches ~ .unit.pos-dornishmarches ~ .unit.pos-dornishmarches,
+.unit.pos-oldtown ~ .unit.pos-oldtown ~ .unit.pos-oldtown,
+.unit.pos-oldtown-harbor ~ .unit.pos-oldtown-harbor ~ .unit.pos-oldtown-harbor,
+.unit.pos-redwynestraights ~ .unit.pos-redwynestraights ~ .unit.pos-redwynestraights,
+.unit.pos-sunspear ~ .unit.pos-sunspear ~ .unit.pos-sunspear,
+.unit.pos-sunspear-harbor ~ .unit.pos-sunspear-harbor ~ .unit.pos-sunspear-harbor,
+.unit.pos-saltshore ~ .unit.pos-saltshore ~ .unit.pos-saltshore,
+.unit.pos-seaofdorne ~ .unit.pos-seaofdorne ~ .unit.pos-seaofdorne,
+
+.unit.pos-pyke ~ .unit.pos-pyke ~ .unit.pos-pyke,
+.unit.pos-pyke-harbor ~ .unit.pos-pyke-harbor ~ .unit.pos-pyke-harbor,
+
+.unit.pos-sunsetsea ~ .unit.pos-sunsetsea ~ .unit.pos-sunsetsea,
+.unit.pos-goldensound ~ .unit.pos-goldensound ~ .unit.pos-goldensound,
+.unit.pos-lannisport ~ .unit.pos-lannisport ~ .unit.pos-lannisport,
+.unit.pos-lannisport-harbor ~ .unit.pos-lannisport-harbor ~ .unit.pos-lannisport-harbor,
+.unit.pos-stoneysept ~ .unit.pos-stoneysept ~ .unit.pos-stoneysept,
+.unit.pos-harrenhal ~ .unit.pos-harrenhal ~ .unit.pos-harrenhal,
+.unit.pos-riverrun ~ .unit.pos-riverrun ~ .unit.pos-riverrun,
+.unit.pos-searoadmarches ~ .unit.pos-searoadmarches ~ .unit.pos-searoadmarches,
+.unit.pos-blackwater ~ .unit.pos-blackwater ~ .unit.pos-blackwater,
+.unit.pos-reach ~ .unit.pos-reach ~ .unit.pos-reach,
+.unit.pos-seagard ~ .unit.pos-seagard ~ .unit.pos-seagard,
+.unit.pos-ironmansbay ~ .unit.pos-ironmansbay ~ .unit.pos-ironmansbay,
+
+.unit.pos-winterfell-harbor ~ .unit.pos-winterfell-harbor ~ .unit.pos-winterfell-harbor,
+.unit.pos-karhold ~ .unit.pos-karhold ~ .unit.pos-karhold,
+.unit.pos-stonyshore ~ .unit.pos-stonyshore ~ .unit.pos-stonyshore,
+.unit.pos-whiteharbor ~ .unit.pos-whiteharbor ~ .unit.pos-whiteharbor,
+.unit.pos-whiteharbor-harbor ~ .unit.pos-whiteharbor-harbor ~ .unit.pos-whiteharbor-harbor,
+.unit.pos-widowswatch ~ .unit.pos-widowswatch ~ .unit.pos-widowswatch,
+.unit.pos-flintsfinger ~ .unit.pos-flintsfinger ~ .unit.pos-flintsfinger,
+.unit.pos-greywaterwatch ~ .unit.pos-greywaterwatch ~ .unit.pos-greywaterwatch,
+.unit.pos-moatcailin ~ .unit.pos-moatcailin ~ .unit.pos-moatcailin,
+.unit.pos-dragonstone ~ .unit.pos-dragonstone ~ .unit.pos-dragonstone,
+.unit.pos-dragonstone-harbor ~ .unit.pos-dragonstone-harbor ~ .unit.pos-dragonstone-harbor,
+.unit.pos-kingswood ~ .unit.pos-kingswood ~ .unit.pos-kingswood,
+.unit.pos-bayofice ~ .unit.pos-bayofice ~ .unit.pos-bayofice,
+.unit.pos-shiveringsea ~ .unit.pos-shiveringsea ~ .unit.pos-shiveringsea,
+.unit.pos-narrowsea ~ .unit.pos-narrowsea ~ .unit.pos-narrowsea,
+.unit.pos-shipbreakerbay ~ .unit.pos-shipbreakerbay ~ .unit.pos-shipbreakerbay,
+.unit.pos-winterfell ~ .unit.pos-winterfell ~ .unit.pos-winterfell,
+.unit.pos-castleblack ~ .unit.pos-castleblack ~ .unit.pos-castleblack {
+    margin-left: -63px;
+    margin-top: -52px;
+    z-index: 15;
+}
+.unit.pos-twins ~ .unit.pos-twins ~ .unit.pos-twins ~ .unit.pos-twins,
+.unit.pos-fingers ~ .unit.pos-fingers ~ .unit.pos-fingers ~ .unit.pos-fingers,
+.unit.pos-mountainsofthemoon ~ .unit.pos-mountainsofthemoon ~ .unit.pos-mountainsofthemoon ~ .unit.pos-mountainsofthemoon,
+.unit.pos-eyrie ~ .unit.pos-eyrie ~ .unit.pos-eyrie ~ .unit.pos-eyrie,
+.unit.pos-crackclawpoint ~ .unit.pos-crackclawpoint ~ .unit.pos-crackclawpoint ~ .unit.pos-crackclawpoint,
+.unit.pos-kingslanding ~ .unit.pos-kingslanding ~ .unit.pos-kingslanding ~ .unit.pos-kingslanding,
+.unit.pos-threetowers ~ .unit.pos-threetowers ~ .unit.pos-threetowers ~ .unit.pos-threetowers,
+
+.unit.pos-stoneyshore ~ .unit.pos-stoneyshore ~ .unit.pos-stoneyshore ~ .unit.pos-stoneyshore,
+
+.unit.pos-blackwaterbay ~ .unit.pos-blackwaterbay ~ .unit.pos-blackwaterbay ~ .unit.pos-blackwaterbay,
+.unit.pos-eastsummersea ~ .unit.pos-eastsummersea ~ .unit.pos-eastsummersea ~ .unit.pos-eastsummersea,
+.unit.pos-westsummersea ~ .unit.pos-westsummersea ~ .unit.pos-westsummersea ~ .unit.pos-westsummersea,
+.unit.pos-arbor ~ .unit.pos-arbor ~ .unit.pos-arbor ~ .unit.pos-arbor,
+.unit.pos-boneway ~ .unit.pos-boneway ~ .unit.pos-boneway ~ .unit.pos-boneway,
+.unit.pos-princespass ~ .unit.pos-princespass ~ .unit.pos-princespass ~ .unit.pos-princespass,
+.unit.pos-yronwood ~ .unit.pos-yronwood ~ .unit.pos-yronwood ~ .unit.pos-yronwood,
+.unit.pos-stormsend ~ .unit.pos-stormsend ~ .unit.pos-stormsend ~ .unit.pos-stormsend,
+.unit.pos-stormsend-harbor ~ .unit.pos-stormsend-harbor ~ .unit.pos-stormsend-harbor ~ .unit.pos-stormsend-harbor,
+.unit.pos-starfall ~ .unit.pos-starfall ~ .unit.pos-starfall ~ .unit.pos-starfall,
+
+.unit.pos-highgarden ~ .unit.pos-highgarden ~ .unit.pos-highgarden ~ .unit.pos-highgarden,
+.unit.pos-dornishmarches ~ .unit.pos-dornishmarches ~ .unit.pos-dornishmarches ~ .unit.pos-dornishmarches,
+.unit.pos-oldtown ~ .unit.pos-oldtown ~ .unit.pos-oldtown ~ .unit.pos-oldtown,
+.unit.pos-oldtown-harbor ~ .unit.pos-oldtown-harbor ~ .unit.pos-oldtown-harbor ~ .unit.pos-oldtown-harbor,
+.unit.pos-redwynestraights ~ .unit.pos-redwynestraights ~ .unit.pos-redwynestraights ~ .unit.pos-redwynestraights,
+.unit.pos-sunspear ~ .unit.pos-sunspear ~ .unit.pos-sunspear ~ .unit.pos-sunspear,
+.unit.pos-sunspear-harbor ~ .unit.pos-sunspear-harbor ~ .unit.pos-sunspear-harbor ~ .unit.pos-sunspear-harbor,
+.unit.pos-saltshore ~ .unit.pos-saltshore ~ .unit.pos-saltshore ~ .unit.pos-saltshore,
+.unit.pos-seaofdorne ~ .unit.pos-seaofdorne ~ .unit.pos-seaofdorne ~ .unit.pos-seaofdorne,
+
+.unit.pos-pyke ~ .unit.pos-pyke ~ .unit.pos-pyke ~ .unit.pos-pyke,
+.unit.pos-pyke-harbor ~ .unit.pos-pyke-harbor ~ .unit.pos-pyke-harbor ~ .unit.pos-pyke-harbor,
+
+.unit.pos-sunsetsea ~ .unit.pos-sunsetsea ~ .unit.pos-sunsetsea ~ .unit.pos-sunsetsea,
+.unit.pos-goldensound ~ .unit.pos-goldensound ~ .unit.pos-goldensound ~ .unit.pos-goldensound,
+.unit.pos-lannisport ~ .unit.pos-lannisport ~ .unit.pos-lannisport ~ .unit.pos-lannisport,
+.unit.pos-lannisport-harbor ~ .unit.pos-lannisport-harbor ~ .unit.pos-lannisport-harbor ~ .unit.pos-lannisport-harbor,
+.unit.pos-stoneysept ~ .unit.pos-stoneysept ~ .unit.pos-stoneysept ~ .unit.pos-stoneysept,
+.unit.pos-harrenhal ~ .unit.pos-harrenhal ~ .unit.pos-harrenhal ~ .unit.pos-harrenhal,
+.unit.pos-riverrun ~ .unit.pos-riverrun ~ .unit.pos-riverrun ~ .unit.pos-riverrun,
+.unit.pos-searoadmarches ~ .unit.pos-searoadmarches ~ .unit.pos-searoadmarches ~ .unit.pos-searoadmarches,
+.unit.pos-blackwater ~ .unit.pos-blackwater ~ .unit.pos-blackwater ~ .unit.pos-blackwater,
+.unit.pos-reach ~ .unit.pos-reach ~ .unit.pos-reach ~ .unit.pos-reach,
+.unit.pos-seagard ~ .unit.pos-seagard ~ .unit.pos-seagard ~ .unit.pos-seagard,
+.unit.pos-ironmansbay ~ .unit.pos-ironmansbay ~ .unit.pos-ironmansbay ~ .unit.pos-ironmansbay,
+
+.unit.pos-winterfell-harbor ~ .unit.pos-winterfell-harbor ~ .unit.pos-winterfell-harbor ~ .unit.pos-winterfell-harbor,
+.unit.pos-karhold ~ .unit.pos-karhold ~ .unit.pos-karhold ~ .unit.pos-karhold,
+.unit.pos-stonyshore ~ .unit.pos-stonyshore ~ .unit.pos-stonyshore ~ .unit.pos-stonyshore,
+.unit.pos-whiteharbor ~ .unit.pos-whiteharbor ~ .unit.pos-whiteharbor ~ .unit.pos-whiteharbor,
+.unit.pos-whiteharbor-harbor ~ .unit.pos-whiteharbor-harbor ~ .unit.pos-whiteharbor-harbor ~ .unit.pos-whiteharbor-harbor,
+.unit.pos-widowswatch ~ .unit.pos-widowswatch ~ .unit.pos-widowswatch ~ .unit.pos-widowswatch,
+.unit.pos-flintsfinger ~ .unit.pos-flintsfinger ~ .unit.pos-flintsfinger ~ .unit.pos-flintsfinger,
+.unit.pos-greywaterwatch ~ .unit.pos-greywaterwatch ~ .unit.pos-greywaterwatch ~ .unit.pos-greywaterwatch,
+.unit.pos-moatcailin ~ .unit.pos-moatcailin ~ .unit.pos-moatcailin ~ .unit.pos-moatcailin,
+.unit.pos-dragonstone ~ .unit.pos-dragonstone ~ .unit.pos-dragonstone ~ .unit.pos-dragonstone,
+.unit.pos-dragonstone-harbor ~ .unit.pos-dragonstone-harbor ~ .unit.pos-dragonstone-harbor ~ .unit.pos-dragonstone-harbor,
+.unit.pos-kingswood ~ .unit.pos-kingswood ~ .unit.pos-kingswood ~ .unit.pos-kingswood,
+.unit.pos-bayofice ~ .unit.pos-bayofice ~ .unit.pos-bayofice ~ .unit.pos-bayofice,
+.unit.pos-shiveringsea ~ .unit.pos-shiveringsea ~ .unit.pos-shiveringsea ~ .unit.pos-shiveringsea,
+.unit.pos-narrowsea ~ .unit.pos-narrowsea ~ .unit.pos-narrowsea ~ .unit.pos-narrowsea,
+.unit.pos-shipbreakerbay ~ .unit.pos-shipbreakerbay ~ .unit.pos-shipbreakerbay ~ .unit.pos-shipbreakerbay,
+.unit.pos-winterfell ~ .unit.pos-winterfell ~ .unit.pos-winterfell ~ .unit.pos-winterfell,
+.unit.pos-castleblack ~ .unit.pos-castleblack ~ .unit.pos-castleblack ~ .unit.pos-castleblack {
+    margin-left: 0px;
+    margin-top: -10px;
+    z-index: 25;
+}
+[class^="order-"],
+[class*=" order-"] {
+    z-index: 50;
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px #000;
+}
+[class^="powertoken-"],
+[class*=" powertoken-"] {
+    z-index: 1;
+}
+
+
+[class^="order-"],
+[class*=" order-"] {
+    opacity: 1;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+}
+[class^="order-"]:hover,
+[class*=" order-"]:hover {
+    opacity: 0;
+}
+
+#toggleUnits,
+#toggleOrders,
+#togglePowertokens {
+    display: none;
+}
+
+#togglePowertokens:not(:checked) ~ [class^="powertoken-"],
+#togglePowertokens:not(:checked) ~ [class*=" powertoken-"],
+#toggleOrders:not(:checked) ~ [class^="order-"],
+#toggleOrders:not(:checked) ~ [class*=" order-"],
+#toggleUnits:not(:checked) ~ .unit {
+    opacity: 0!important;
+}
+
+.controls {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    border: 1em solid transparent;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    z-index: 9999;
+    background: rgba(0,0,0,.7);
+    height: 0;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+    color: #fff;
+    overflow: auto;
+}
+.controls:hover {
+    height: 90%;
+}
+.controls > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.interfaceControls li {
+    display: inline-block;
+    font-weight: bold;
+    border-left: 1px solid #fff;
+    margin-left: 1em;
+    padding-left: 1em;
+}
+.interfaceControls li:first-child {
+    border-left: 0;
+    margin-left: 0;
+    padding-left: 0;
+}
+ul.nav {
+    float: left;
+    padding-top: 1em;
+    border-bottom: 2px solid #000;
+}
+.nav li {
+    width: 20em;
+}
+.nav li > * {
+    display: block;
+    padding: .5em 1em;
+    background: #eee;
+    background: -webkit-linear-gradient(top, #eee, #ccc);
+    background: -moz-linear-gradient(top, #eee, #ccc);
+    background: -o-linear-gradient(top, #eee, #ccc);
+    background: linear-gradient(top, #eee, #ccc);
+    color: #000;
+    font-weight: bold;
+    border: 2px solid #000;
+    border-bottom: 0;
+}
+.nav li > *:hover {
+    background: #ccc;
+    background: -webkit-linear-gradient(top, #ccc, #aaa);
+    background: -moz-linear-gradient(top, #ccc, #aaa);
+    background: -o-linear-gradient(top, #ccc, #aaa);
+    background: linear-gradient(top, #ccc, #aaa);
+}
+[name="navContentControl"] {
+    display: none;
+}
+[name="navContentControl"] + * {
+    display: none;
+}
+[name="navContentControl"]:checked + * {
+    display: block;
+    margin: 1em 0 0 22em;
+}
+.fullwidth {
+    display: block;
+    margin: 0 0 1em;
+}
+.fullwidth textarea {
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 3em;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+    
+}
+.fullwidth textarea:focus {
+    min-height: 10em;
+    max-height: none;
+}
+input[type="checkbox"][name^="housecard-"] {
+  display: none;
+}
+input[type="checkbox"][name^="housecard-"]:checked + label {
+  opacity: .5;
+}
+[class^="tokenCounts-"],
+[class*=" tokenCounts-"] {
+    position: absolute;
+    top: 8%;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px #000;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0;
+    font-size: 1.3em;
+}
+.tokenCounts-tyrell {
+    left: 320px;
+}
+.tokenCounts-stark {
+    left: 258px;
+}
+.tokenCounts-martell {
+    left: 196px;
+}
+.tokenCounts-lannister {
+    left: 134px;
+}
+.tokenCounts-greyjoy {
+    left: 72px;
+}
+.tokenCounts-baratheon {
+    left: 10px;
+}
+.availablePowertokens {
+    display: inline;
+    position: relative;
+    top: 100%;
+}
+.leftPowertokens {
+    display: inline;
+    position: relative;
+    top: 100%;
+}
+.availablePowertokens:after {
+    content: "";
+}
+.leftPowertokens:before {
+    content: "/";
+    vertical-align: bottom;
+}
+.availablePowertokens:hover,
+.leftPowertokens:hover {
+    text-decoration: underline;
+}
+.vsb-token {
+    position: absolute;
+    right: 10%;
+    top: 34%;
+    width: 5%;
+    height: 4%;
+    cursor: pointer;
+}
+.raven-token {
+    position: absolute;
+    right: 3%;
+    top: 34%;
+    width: 5%;
+    height: 4%;
+    cursor: pointer;
+}
+.vsb-token.used:before,
+.raven-token.used:before {
+    content: "used";
+    color: #fff;
+    font-weight: bold;
+    line-height: 0;
+    display: block;
+    font-size: 2em;
+    position: relative;
+    top: 50%;
+    text-align: center;
+    text-shadow: 1px 1px 2px #000;
+    white-space: nowrap;
+}
+  </style>
+  
+
+
+<script type='text/javascript'>//<![CDATA[ 
+$(window).load(function(){
+var $board = $('.board'),
+    setShortLink = function (href) {
+        var characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
+            string = '',
+            charCnt = 20,
+            uri;
+        for (var i = 0; i < charCnt; i += 1) {
+            string += characters[Math.floor(Math.random() * characters.length)];
+        }
+        uri = 'http://tinyurl.com/create.php?source=indexpage&url=' + encodeURIComponent(href) + '&alias=' + string;
+        $('body').append('<img src="' + uri + '" style="height: 1px; width: 1px; position: absolute; z-index: -999; opacity: 0;" />');
+        $('#shortlink').html('http://tinyurl.com/' + string);
+    },
+    setBoard = function (conf) {
+        var value,
+            htmlString = '';
+        // wildling token
+        htmlString += '<div class="wildlingmarker pos-wilding-' + conf.wildlings + '"></div>';
+        // round token
+        htmlString += '<div class="round pos-round-' + conf.round + '"></div>';
+        // Influence Tracks
+        // Iron Throne
+        value = conf.ironThroneOrder.split('\n');
+        for(var i = 0; i < value.length; i += 1) {
+            htmlString += '<div class="token-' + value[i].toLowerCase() + ' pos-throne-' + (i + 1) + '"></div>';
+        }
+        // Fiefdom
+        value = conf.fiefdomOrder.split('\n');
+        for(var i = 0; i < value.length; i += 1) {
+            htmlString += '<div class="token-' + value[i].toLowerCase() + ' pos-fiefdom-' + (i + 1) + '"></div>';
+        }
+        // King's Court
+        value = conf.kingsCourtOrder.split('\n');
+        for(var i = 0; i < value.length; i += 1) {
+            htmlString += '<div class="token-' + value[i].toLowerCase() + ' pos-court-' + (i + 1) + '"></div>';
+        }
+        // Supply
+        value = conf.supply.split('\n');
+        for(var i = 0; i < value.length; i += 1) {
+            htmlString += '<div class="supply-' + value[i].toLowerCase().split(': ')[0] + ' pos-supply-' + value[i].split(': ')[1] + '"></div>';
+        }
+        // Victory
+        value = conf.victory.split('\n');
+        for(var i = 0; i < value.length; i += 1) {
+            htmlString += '<div class="victory-' + value[i].toLowerCase().split(': ')[0] + ' pos-victory-' + value[i].split(': ')[1] + '"></div>';
+        }
+        // Garrisons
+        value = conf.garrisons.split('\n');
+        for(var i = 0; i < value.length; i += 1) {
+            htmlString += '<div class="garrison pos-' + value[i].toLowerCase().split(': ')[0].toLowerCase().replace(/ - port$/, '-harbor').replace(/([' ]|^the )/g, '') + '" data-value="' + value[i].split(': ')[1] + '"></div>';
+        }
+        // VSB and Raven token
+        htmlString += '<div class="vsb-token ' + (conf.vsbUsed ? 'used' : 'unused') + '"></div>';
+        htmlString += '<div class="raven-token ' + (conf.ravenUsed ? 'used' : 'unused') + '"></div>';
+        // Units
+        for(var house in conf.units) {
+            if (conf.units[house].length > 0) {
+                foo = conf.units;
+                value = conf.units[house]
+                    .replace(/ (routed-)?kn(,|\n|$)/ig, ' $1knight$2')
+                    .replace(/ (routed-)?fm(,|\n|$)/ig, ' $1footman$2')
+                    .replace(/ (routed-)?se(,|\n|$)/ig, ' $1siege$2')
+                    .replace(/ (routed-)?sh(,|\n|$)/ig, ' $1ship$2')
+                    .split('\n');
+                for(var i = 0; i < value.length; i += 1) {
+                    var valueSplitted = value[i].split(': '),
+                        area = valueSplitted[0].toLowerCase().replace(/ - port$/, '-harbor').replace(/([' ]|^the )/g, ''),
+                        units = valueSplitted[1].split(', ');
+                    for(var j = 0; j < units.length; j += 1) {
+                        htmlString += '<div class="' + units[j].toLowerCase() + '-' + house + ' pos-' + area + ' unit"></div>';
+                    }
+                }
+            }
+        }
+        // Orders
+        for(var house in conf.orders) {
+            if (conf.orders[house].length > 0) {
+                value = conf.orders[house]
+                    .replace(/ cp(\n|$)/ig, ' power-1$1')
+                    .replace(/ cp\*(\n|$)/ig, ' power-2$1')
+                    .replace(/ m-1(\n|$)/ig, ' march-0$1')
+                    .replace(/ m\+0(\n|$)/ig, ' march-1$1')
+                    .replace(/ m(\+1)?\*?(\n|$)/ig, ' march-2$1')
+                    .replace(/ r(aid)?(\n|$)/ig, ' raid-1$1')
+                    .replace(/ r(aid)?\*(\n|$)/ig, ' raid-2$1')
+                    .replace(/ d(efend)?(\+1)?(\n|$)/ig, ' defend-1$1')
+                    .replace(/ d(efend)?(\+2)?\*?(\n|$)/ig, ' defend-2$1')
+                    .replace(/ s(upport)?(\n|$)/ig, ' support-1$1')
+                    .replace(/ s(upport)?(\+1)?\*?(\n|$)/ig, ' support-2$1')
+                    .split('\n');
+                for(var i = 0; i < value.length; i += 1) {
+                    var valueSplitted = value[i].split(': '),
+                        area = valueSplitted[0].toLowerCase().replace(/ - port$/, '-harbor').replace(/([' ]|^the )/g, '');
+                    htmlString += '<div class="order-' + valueSplitted[1].toLowerCase() + ' pos-' + area + '"></div>';
+                }
+            }
+        }
+        // Power Tokens on the board
+        for(var house in conf.powertokens) {
+            if (conf.powertokens[house].length > 0) {
+                value = conf.powertokens[house].split('\n');
+                for(var i = 0; i < value.length; i += 1) {
+                    var area = value[i].toLowerCase().replace(/ - port$/, '-harbor').replace(/([' ]|^the )/g, '');
+                    htmlString += '<div class="powertoken-' + house + ' pos-' + area + '"></div>';
+                }
+            }
+        }
+        for(var house in conf.availablePowertokens) {
+            htmlString += '<div class="tokenCounts-' + house + ' powertoken-' + house + '">';
+            // available Power Tokens
+            htmlString += '<div class="availablePowertokens">';
+            htmlString += conf.availablePowertokens[house];
+            htmlString += '</div>';
+            // left Power Tokens
+            htmlString += '<div class="leftPowertokens">';
+            htmlString += conf.maxPowertokens - conf.availablePowertokens[house] - (conf.powertokens[house].length > 0 ? conf.powertokens[house].split('\n').length : 0);
+            htmlString += '</div>';
+            htmlString += '</div>';
+        }
+		// housecard tracking
+		for(var house in conf.housecards) {
+			var housecards = conf.housecards[house].split('\n');
+			for (var i = 0; i < housecards.length; i += 1) {
+				$('[name="housecard-' + i + '-' + house + '"] + label').html(housecards[i]);
+			}
+		}
+        $(':not(input)', $board).remove();
+        $(htmlString).appendTo($board);
+    },
+    getConf = function () {
+        var conf = {
+            "wildlings": $('[name="wildlings"]').val(),
+            "round": $('[name="round"]').val(),
+            "ironThroneOrder": $('[name="ironThroneOrder"]').val(),
+            "fiefdomOrder": $('[name="fiefdomOrder"]').val(),
+            "kingsCourtOrder": $('[name="kingsCourtOrder"]').val(),
+            "garrisons": $('[name="garrisons"]').val(),
+            "supply": $('[name="supply"]').val(),
+            "victory": $('[name="victory"]').val(),
+            "vsbUsed": $('[name="vsb-used"]').attr('checked'),
+            "ravenUsed": $('[name="raven-used"]').attr('checked'),
+            
+            "units": {
+                "baratheon": $('[name="units-baratheon"]').val(),
+                "greyjoy": $('[name="units-greyjoy"]').val(),
+                "lannister": $('[name="units-lannister"]').val(),
+                "martell": $('[name="units-martell"]').val(),
+                "stark": $('[name="units-stark"]').val(),
+                "tyrell": $('[name="units-tyrell"]').val()
+            },
+            
+            "orders": {
+                "baratheon": $('[name="orders-baratheon"]').val(),
+                "greyjoy": $('[name="orders-greyjoy"]').val(),
+                "lannister": $('[name="orders-lannister"]').val(),
+                "martell": $('[name="orders-martell"]').val(),
+                "stark": $('[name="orders-stark"]').val(),
+                "tyrell": $('[name="orders-tyrell"]').val()
+            },
+            
+            "powertokens": {
+                "baratheon": $('[name="powertokens-baratheon"]').val(),
+                "greyjoy": $('[name="powertokens-greyjoy"]').val(),
+                "lannister": $('[name="powertokens-lannister"]').val(),
+                "martell": $('[name="powertokens-martell"]').val(),
+                "stark": $('[name="powertokens-stark"]').val(),
+                "tyrell": $('[name="powertokens-tyrell"]').val()
+            },
+            
+            "housecards": {
+                "baratheon": $('[name="housecards-baratheon"]').val(),
+                "greyjoy": $('[name="housecards-greyjoy"]').val(),
+                "lannister": $('[name="housecards-lannister"]').val(),
+                "martell": $('[name="housecards-martell"]').val(),
+                "stark": $('[name="housecards-stark"]').val(),
+                "tyrell": $('[name="housecards-tyrell"]').val()
+            },
+			
+			"housecardTracking": {
+				"baratheon": [
+					$('[name="housecard-0-baratheon"]').is(':checked'),
+					$('[name="housecard-1-baratheon"]').is(':checked'),
+					$('[name="housecard-2-baratheon"]').is(':checked'),
+					$('[name="housecard-3-baratheon"]').is(':checked'),
+					$('[name="housecard-4-baratheon"]').is(':checked'),
+					$('[name="housecard-5-baratheon"]').is(':checked'),
+					$('[name="housecard-6-baratheon"]').is(':checked')
+				],
+				"greyjoy": [
+					$('[name="housecard-0-greyjoy"]').is(':checked'),
+					$('[name="housecard-1-greyjoy"]').is(':checked'),
+					$('[name="housecard-2-greyjoy"]').is(':checked'),
+					$('[name="housecard-3-greyjoy"]').is(':checked'),
+					$('[name="housecard-4-greyjoy"]').is(':checked'),
+					$('[name="housecard-5-greyjoy"]').is(':checked'),
+					$('[name="housecard-6-greyjoy"]').is(':checked')
+				],
+				"lannister": [
+					$('[name="housecard-0-lannister"]').is(':checked'),
+					$('[name="housecard-1-lannister"]').is(':checked'),
+					$('[name="housecard-2-lannister"]').is(':checked'),
+					$('[name="housecard-3-lannister"]').is(':checked'),
+					$('[name="housecard-4-lannister"]').is(':checked'),
+					$('[name="housecard-5-lannister"]').is(':checked'),
+					$('[name="housecard-6-lannister"]').is(':checked')
+				],
+				"martell": [
+					$('[name="housecard-0-martell"]').is(':checked'),
+					$('[name="housecard-1-martell"]').is(':checked'),
+					$('[name="housecard-2-martell"]').is(':checked'),
+					$('[name="housecard-3-martell"]').is(':checked'),
+					$('[name="housecard-4-martell"]').is(':checked'),
+					$('[name="housecard-5-martell"]').is(':checked'),
+					$('[name="housecard-6-martell"]').is(':checked')
+				],
+				"stark": [
+					$('[name="housecard-0-stark"]').is(':checked'),
+					$('[name="housecard-1-stark"]').is(':checked'),
+					$('[name="housecard-2-stark"]').is(':checked'),
+					$('[name="housecard-3-stark"]').is(':checked'),
+					$('[name="housecard-4-stark"]').is(':checked'),
+					$('[name="housecard-5-stark"]').is(':checked'),
+					$('[name="housecard-6-stark"]').is(':checked')
+				],
+				"tyrell": [
+					$('[name="housecard-0-tyrell"]').is(':checked'),
+					$('[name="housecard-1-tyrell"]').is(':checked'),
+					$('[name="housecard-2-tyrell"]').is(':checked'),
+					$('[name="housecard-3-tyrell"]').is(':checked'),
+					$('[name="housecard-4-tyrell"]').is(':checked'),
+					$('[name="housecard-5-tyrell"]').is(':checked'),
+					$('[name="housecard-6-tyrell"]').is(':checked')
+				]
+			},
+            
+            "availablePowertokens": {
+                "baratheon": $('[name="availablePowertokens-baratheon"]').val(),
+                "greyjoy": $('[name="availablePowertokens-greyjoy"]').val(),
+                "lannister": $('[name="availablePowertokens-lannister"]').val(),
+                "martell": $('[name="availablePowertokens-martell"]').val(),
+                "stark": $('[name="availablePowertokens-stark"]').val(),
+                "tyrell": $('[name="availablePowertokens-tyrell"]').val()
+            },
+            
+            "maxPowertokens": $('[name="maxPowertokens"]').val()
+        }
+        return conf;
+    },
+    setConf = function (conf) {
+        $('[name="wildlings"]').val(conf.wildlings);
+        $('[name="round"]').val(conf.round);
+        $('[name="ironThroneOrder"]').val(conf.ironThroneOrder);
+        $('[name="fiefdomOrder"]').val(conf.fiefdomOrder);
+        $('[name="kingsCourtOrder"]').val(conf.kingsCourtOrder);
+        $('[name="garrisons"]').val(conf.garrisons);
+        $('[name="supply"]').val(conf.supply);
+        $('[name="victory"]').val(conf.victory);
+        $('[name="vsb-used"]').attr('checked', conf.vsbUsed);
+        $('[name="raven-used"]').attr('checked', conf.ravenUsed);
+
+        $('[name="units-baratheon"]').val(conf.units.baratheon);
+        $('[name="units-greyjoy"]').val(conf.units.greyjoy);
+        $('[name="units-lannister"]').val(conf.units.lannister);
+        $('[name="units-martell"]').val(conf.units.martell);
+        $('[name="units-stark"]').val(conf.units.stark);
+        $('[name="units-tyrell"]').val(conf.units.tyrell);
+
+        $('[name="orders-baratheon"]').val(conf.orders.baratheon);
+        $('[name="orders-greyjoy"]').val(conf.orders.greyjoy);
+        $('[name="orders-lannister"]').val(conf.orders.lannister);
+        $('[name="orders-martell"]').val(conf.orders.martell);
+        $('[name="orders-stark"]').val(conf.orders.stark);
+        $('[name="orders-tyrell"]').val(conf.orders.tyrell);
+
+        $('[name="powertokens-baratheon"]').val(conf.powertokens.baratheon);
+        $('[name="powertokens-greyjoy"]').val(conf.powertokens.greyjoy);
+        $('[name="powertokens-lannister"]').val(conf.powertokens.lannister);
+        $('[name="powertokens-martell"]').val(conf.powertokens.martell);
+        $('[name="powertokens-stark"]').val(conf.powertokens.stark);
+        $('[name="powertokens-tyrell"]').val(conf.powertokens.tyrell);
+
+        $('[name="housecards-baratheon"]').val(conf.housecards.baratheon);
+        $('[name="housecards-greyjoy"]').val(conf.housecards.greyjoy);
+        $('[name="housecards-lannister"]').val(conf.housecards.lannister);
+        $('[name="housecards-martell"]').val(conf.housecards.martell);
+        $('[name="housecards-stark"]').val(conf.housecards.stark);
+        $('[name="housecards-tyrell"]').val(conf.housecards.tyrell);
+		
+		if (conf.housecardTracking) {
+			$('[name="housecard-0-baratheon"]').attr('checked', conf.housecardTracking.baratheon[0]);
+			$('[name="housecard-1-baratheon"]').attr('checked', conf.housecardTracking.baratheon[1]);
+			$('[name="housecard-2-baratheon"]').attr('checked', conf.housecardTracking.baratheon[2]);
+			$('[name="housecard-3-baratheon"]').attr('checked', conf.housecardTracking.baratheon[3]);
+			$('[name="housecard-4-baratheon"]').attr('checked', conf.housecardTracking.baratheon[4]);
+			$('[name="housecard-5-baratheon"]').attr('checked', conf.housecardTracking.baratheon[5]);
+			$('[name="housecard-6-baratheon"]').attr('checked', conf.housecardTracking.baratheon[6]);
+			
+			$('[name="housecard-0-greyjoy"]').attr('checked', conf.housecardTracking.greyjoy[0]);
+			$('[name="housecard-1-greyjoy"]').attr('checked', conf.housecardTracking.greyjoy[1]);
+			$('[name="housecard-2-greyjoy"]').attr('checked', conf.housecardTracking.greyjoy[2]);
+			$('[name="housecard-3-greyjoy"]').attr('checked', conf.housecardTracking.greyjoy[3]);
+			$('[name="housecard-4-greyjoy"]').attr('checked', conf.housecardTracking.greyjoy[4]);
+			$('[name="housecard-5-greyjoy"]').attr('checked', conf.housecardTracking.greyjoy[5]);
+			$('[name="housecard-6-greyjoy"]').attr('checked', conf.housecardTracking.greyjoy[6]);
+			
+			$('[name="housecard-0-lannister"]').attr('checked', conf.housecardTracking.lannister[0]);
+			$('[name="housecard-1-lannister"]').attr('checked', conf.housecardTracking.lannister[1]);
+			$('[name="housecard-2-lannister"]').attr('checked', conf.housecardTracking.lannister[2]);
+			$('[name="housecard-3-lannister"]').attr('checked', conf.housecardTracking.lannister[3]);
+			$('[name="housecard-4-lannister"]').attr('checked', conf.housecardTracking.lannister[4]);
+			$('[name="housecard-5-lannister"]').attr('checked', conf.housecardTracking.lannister[5]);
+			$('[name="housecard-6-lannister"]').attr('checked', conf.housecardTracking.lannister[6]);
+			
+			$('[name="housecard-0-martell"]').attr('checked', conf.housecardTracking.martell[0]);
+			$('[name="housecard-1-martell"]').attr('checked', conf.housecardTracking.martell[1]);
+			$('[name="housecard-2-martell"]').attr('checked', conf.housecardTracking.martell[2]);
+			$('[name="housecard-3-martell"]').attr('checked', conf.housecardTracking.martell[3]);
+			$('[name="housecard-4-martell"]').attr('checked', conf.housecardTracking.martell[4]);
+			$('[name="housecard-5-martell"]').attr('checked', conf.housecardTracking.martell[5]);
+			$('[name="housecard-6-martell"]').attr('checked', conf.housecardTracking.martell[6]);
+			
+			$('[name="housecard-0-stark"]').attr('checked', conf.housecardTracking.stark[0]);
+			$('[name="housecard-1-stark"]').attr('checked', conf.housecardTracking.stark[1]);
+			$('[name="housecard-2-stark"]').attr('checked', conf.housecardTracking.stark[2]);
+			$('[name="housecard-3-stark"]').attr('checked', conf.housecardTracking.stark[3]);
+			$('[name="housecard-4-stark"]').attr('checked', conf.housecardTracking.stark[4]);
+			$('[name="housecard-5-stark"]').attr('checked', conf.housecardTracking.stark[5]);
+			$('[name="housecard-6-stark"]').attr('checked', conf.housecardTracking.stark[6]);
+			
+			$('[name="housecard-0-tyrell"]').attr('checked', conf.housecardTracking.tyrell[0]);
+			$('[name="housecard-1-tyrell"]').attr('checked', conf.housecardTracking.tyrell[1]);
+			$('[name="housecard-2-tyrell"]').attr('checked', conf.housecardTracking.tyrell[2]);
+			$('[name="housecard-3-tyrell"]').attr('checked', conf.housecardTracking.tyrell[3]);
+			$('[name="housecard-4-tyrell"]').attr('checked', conf.housecardTracking.tyrell[4]);
+			$('[name="housecard-5-tyrell"]').attr('checked', conf.housecardTracking.tyrell[5]);
+			$('[name="housecard-6-tyrell"]').attr('checked', conf.housecardTracking.tyrell[6]);
+		}
+
+        $('[name="availablePowertokens-baratheon"]').val(conf.availablePowertokens.baratheon);
+        $('[name="availablePowertokens-greyjoy"]').val(conf.availablePowertokens.greyjoy);
+        $('[name="availablePowertokens-lannister"]').val(conf.availablePowertokens.lannister);
+        $('[name="availablePowertokens-martell"]').val(conf.availablePowertokens.martell);
+        $('[name="availablePowertokens-stark"]').val(conf.availablePowertokens.stark);
+        $('[name="availablePowertokens-tyrell"]').val(conf.availablePowertokens.tyrell);
+
+        $('[name="maxPowertokens"]').val(conf.maxPowertokens);
+    };
+
+// inital setting of the board
+try {
+    var hash = location.hash;
+    if (hash.indexOf('#') === 0) {
+        hash = hash.substr(1);
+    }
+    if (hash.length > 0) {
+        var conf = JSON.parse(decodeURIComponent(hash));
+        setBoard(conf);
+        setConf(conf);
+    } else {
+        throw 'No Conf in hash';
+    }
+} catch (e) {
+    setBoard(getConf());
+};
+// setting hash on form change
+$('.navContent :input').on('change', function () {
+    location.hash = encodeURIComponent(JSON.stringify(getConf()));
+});
+// setting board and form on hash change
+$(window).on('hashchange', function () {
+    var hash = location.hash;
+    if (hash.indexOf('#') === 0) {
+        hash = hash.substr(1);
+    }
+    setConf(JSON.parse(decodeURIComponent(hash)));
+    setBoard(getConf());
+    setShortLink(location.href);
+});
+// click listener for powertoken change
+$('body').on('click', function (e) {
+    var $target = $(e.target);
+    if ($target.hasClass('availablePowertokens')) {
+        e.preventDefault();
+        var $input = $('[name="available' + $target.parent().attr('class').replace(/.*powertoken-([^ ]*)/, 'Powertokens-\$1') + '"]');
+        $input.val($input.val() - 1)
+            .trigger('change');
+    } else if ($target.hasClass('leftPowertokens')) {
+        e.preventDefault();
+        var $input = $('[name="available' + $target.parent().attr('class').replace(/.*powertoken-([^ ]*)/, 'Powertokens-\$1') + '"]');
+        $input.val(+$input.val() + 1)
+            .trigger('change');
+    } else if ($target.hasClass('vsb-token')) {
+        e.preventDefault();
+        var $input = $('[name="vsb-used"]');
+        $input.attr('checked', !$target.hasClass('used'))
+            .trigger('change');
+    } else if ($target.hasClass('raven-token')) {
+        e.preventDefault();
+        var $input = $('[name="raven-used"]');
+        $input.attr('checked', !$target.hasClass('used'))
+            .trigger('change');
+    }
+});
+});//]]>  
+
+</script>
+
+
+</head>
+<body>
+  <div class="controls">
+    <ul class="interfaceControls"
+        ><li><label for="toggleUnits">Show/Hide Units on Board</label></li
+        ><li><label for="toggleOrders">Show/Hide Orders on Board</label></li
+        ><li><label for="togglePowertokens">Show/Hide Powertokens on Board</label></li
+        ><li id="shortlink"></li
+    ></ul>
+    <ul class="nav"
+        ><li><label for="tracks">Influence Tracks/Supply/…</label></li
+        ><li><label for="baratheonStuff">Baratheon: Settings</label></li
+        ><li><label for="greyjoyStuff">Greyjoy: Settings</label></li
+        ><li><label for="lannisterStuff">Lannister: Settings</label></li
+        ><li><label for="martellStuff">Martell: Settings</label></li
+        ><li><label for="starkStuff">Stark: Settings</label></li
+        ><li><label for="tyrellStuff">Tyrell: Settings</label></li
+    ></ul>
+    <input type="radio" name="navContentControl" id="tracks"/>
+    <div class="navContent">
+        <label class="fullwidth">
+            Iron Throne Order:
+            <textarea name="ironThroneOrder">Baratheon
+Lannister
+Stark
+Martell
+Greyjoy
+Tyrell</textarea>
+        </label>
+        <label class="fullwidth">
+            Fiefdom Order:
+            <textarea name="fiefdomOrder">Greyjoy
+Tyrell
+Martell
+Stark
+Baratheon
+Lannister</textarea>
+        </label>
+        <label class="fullwidth">
+            King's Court Order:
+            <textarea name="kingsCourtOrder">Lannister
+Stark
+Martell
+Baratheon
+Tyrell
+Greyjoy</textarea>
+        </label>
+        <label class="fullwidth">
+            Supply:
+            <textarea name="supply">Baratheon: 2
+Greyjoy: 2
+Lannister: 2
+Martell: 2
+Stark: 1
+Tyrell: 2</textarea>
+        </label>
+        <label class="fullwidth">
+            Victory:
+            <textarea name="victory">Baratheon: 1
+Greyjoy: 1
+Lannister: 1
+Martell: 1
+Stark: 2
+Tyrell: 1</textarea>
+        </label>
+        <label class="fullwidth">
+            Garrisons:
+            <textarea name="garrisons">King's Landing: 5
+The Eyrie: 6
+Dragonstone: 2
+Winterfell: 2
+Lannisport: 2
+Highgarden: 2
+Sunspear: 2
+Pyke: 2</textarea>
+        </label>
+        <label class="fullwidth">
+            Wildlings: <input type="number" step="2" min="0" max="12" value="2" name="wildlings"/>
+        </label>
+        <label class="fullwidth">
+            Round: <input type="number" step="1" min="1" max="10" value="1" name="round"/>
+        </label>
+        <lable class="fullwidth">
+            Valyrian Steel Blade was used: <input type="checkbox" name="vsb-used" />
+        </label>
+        <lable class="fullwidth">
+            Raven was used: <input type="checkbox" name="raven-used" />
+        </label>
+        <label class="fullwidth">
+            Max Power Tokens:
+            <input name="maxPowertokens" type="number" step="1" value="20"/>
+        </label>
+        <label class="fullwidth">
+            Baratheons House Cards:
+            <textarea name="housecards-baratheon"></textarea>
+        </label>
+        <label class="fullwidth">
+            Greyjoys House Cards:
+            <textarea name="housecards-greyjoy"></textarea>
+        </label>
+        <label class="fullwidth">
+            Lannisters House Cards:
+            <textarea name="housecards-lannister"></textarea>
+        </label>
+        <label class="fullwidth">
+            Martells House Cards:
+            <textarea name="housecards-martell"></textarea>
+        </label>
+        <label class="fullwidth">
+            Starks House Cards:
+            <textarea name="housecards-stark"></textarea>
+        </label>
+        <label class="fullwidth">
+            Tyrells House Cards:
+            <textarea name="housecards-tyrell"></textarea>
+        </label>
+    </div>
+    <input type="radio" name="navContentControl" id="baratheonStuff"/>
+    <div class="navContent">
+        <label class="fullwidth">
+            Units:
+            <textarea name="units-baratheon">Dragonstone: Footman, Knight
+Kingswood: Footman
+Shipbreaker Bay: Ship, Ship</textarea>
+        </label>
+        <label class="fullwidth">
+            Orders:
+            <textarea name="orders-baratheon"></textarea>
+        </label>
+        <label class="fullwidth">
+            Powertokens in Areas:
+            <textarea name="powertokens-baratheon"></textarea>
+        </label>
+        <label class="fullwidth">
+            Available Power Tokens:
+            <input name="availablePowertokens-baratheon" type="number" min="0" max="20" step="1" value="5"/>
+        </label>
+		<input type="checkbox" name="housecard-0-baratheon" id="housecard-0-baratheon" />
+		<label for="housecard-0-baratheon"></label>
+		<input type="checkbox" name="housecard-1-baratheon" id="housecard-1-baratheon" />
+		<label for="housecard-1-baratheon"></label>
+		<input type="checkbox" name="housecard-2-baratheon" id="housecard-2-baratheon" />
+		<label for="housecard-2-baratheon"></label>
+		<input type="checkbox" name="housecard-3-baratheon" id="housecard-3-baratheon" />
+		<label for="housecard-3-baratheon"></label>
+		<input type="checkbox" name="housecard-4-baratheon" id="housecard-4-baratheon" />
+		<label for="housecard-4-baratheon"></label>
+		<input type="checkbox" name="housecard-5-baratheon" id="housecard-5-baratheon" />
+		<label for="housecard-5-baratheon"></label>
+		<input type="checkbox" name="housecard-6-baratheon" id="housecard-6-baratheon" />
+		<label for="housecard-6-baratheon"></label>
+    </div>
+    <input type="radio" name="navContentControl" id="greyjoyStuff"/>
+    <div class="navContent">
+        <label class="fullwidth">
+            Units:
+            <textarea name="units-greyjoy">Pyke: Footman, Knight
+Greywater Watch: Footman
+Ironman's Bay: Ship
+Pyke - Port: Ship</textarea>
+        </label>
+        <label class="fullwidth">
+            Orders:
+            <textarea name="orders-greyjoy"></textarea>
+        </label>
+        <label class="fullwidth">
+            Powertokens in Areas:
+            <textarea name="powertokens-greyjoy"></textarea>
+        </label>
+        <label class="fullwidth">
+            Available Power Tokens:
+            <input name="availablePowertokens-greyjoy" type="number" min="0" max="20" step="1" value="5"/>
+        </label>
+		<input type="checkbox" name="housecard-0-greyjoy" id="housecard-0-greyjoy" />
+		<label for="housecard-0-greyjoy"></label>
+		<input type="checkbox" name="housecard-1-greyjoy" id="housecard-1-greyjoy" />
+		<label for="housecard-1-greyjoy"></label>
+		<input type="checkbox" name="housecard-2-greyjoy" id="housecard-2-greyjoy" />
+		<label for="housecard-2-greyjoy"></label>
+		<input type="checkbox" name="housecard-3-greyjoy" id="housecard-3-greyjoy" />
+		<label for="housecard-3-greyjoy"></label>
+		<input type="checkbox" name="housecard-4-greyjoy" id="housecard-4-greyjoy" />
+		<label for="housecard-4-greyjoy"></label>
+		<input type="checkbox" name="housecard-5-greyjoy" id="housecard-5-greyjoy" />
+		<label for="housecard-5-greyjoy"></label>
+		<input type="checkbox" name="housecard-6-greyjoy" id="housecard-6-greyjoy" />
+		<label for="housecard-6-greyjoy"></label>
+    </div>
+    <input type="radio" name="navContentControl" id="lannisterStuff"/>
+    <div class="navContent">
+        <label class="fullwidth">
+            Units:
+            <textarea name="units-lannister">Lannisport: Footman, Knight
+Stoney Sept: Footman
+The Golden Sound: Ship</textarea>
+        </label>
+        <label class="fullwidth">
+            Orders:
+            <textarea name="orders-lannister"></textarea>
+        </label>
+        <label class="fullwidth">
+            Powertokens in Areas:
+            <textarea name="powertokens-lannister"></textarea>
+        </label>
+        <label class="fullwidth">
+            Available Power Tokens:
+            <input name="availablePowertokens-lannister" type="number" min="0" max="20" step="1" value="5"/>
+        </label>
+		<input type="checkbox" name="housecard-0-lannister" id="housecard-0-lannister" />
+		<label for="housecard-0-lannister"></label>
+		<input type="checkbox" name="housecard-1-lannister" id="housecard-1-lannister" />
+		<label for="housecard-1-lannister"></label>
+		<input type="checkbox" name="housecard-2-lannister" id="housecard-2-lannister" />
+		<label for="housecard-2-lannister"></label>
+		<input type="checkbox" name="housecard-3-lannister" id="housecard-3-lannister" />
+		<label for="housecard-3-lannister"></label>
+		<input type="checkbox" name="housecard-4-lannister" id="housecard-4-lannister" />
+		<label for="housecard-4-lannister"></label>
+		<input type="checkbox" name="housecard-5-lannister" id="housecard-5-lannister" />
+		<label for="housecard-5-lannister"></label>
+		<input type="checkbox" name="housecard-6-lannister" id="housecard-6-lannister" />
+		<label for="housecard-6-lannister"></label>
+    </div>
+    <input type="radio" name="navContentControl" id="martellStuff"/>
+    <div class="navContent">
+        <label class="fullwidth">
+            Units:
+            <textarea name="units-martell">Sunspear: Footman, Knight
+Salt Shore: Footman
+Sea of Dorne: Ship</textarea>
+        </label>
+        <label class="fullwidth">
+            Orders:
+            <textarea name="orders-martell"></textarea>
+        </label>
+        <label class="fullwidth">
+            Powertokens in Areas:
+            <textarea name="powertokens-martell"></textarea>
+        </label>
+        <label class="fullwidth">
+            Available Power Tokens:
+            <input name="availablePowertokens-martell" type="number" min="0" max="20" step="1" value="5"/>
+        </label>
+		<input type="checkbox" name="housecard-0-martell" id="housecard-0-martell" />
+		<label for="housecard-0-martell"></label>
+		<input type="checkbox" name="housecard-1-martell" id="housecard-1-martell" />
+		<label for="housecard-1-martell"></label>
+		<input type="checkbox" name="housecard-2-martell" id="housecard-2-martell" />
+		<label for="housecard-2-martell"></label>
+		<input type="checkbox" name="housecard-3-martell" id="housecard-3-martell" />
+		<label for="housecard-3-martell"></label>
+		<input type="checkbox" name="housecard-4-martell" id="housecard-4-martell" />
+		<label for="housecard-4-martell"></label>
+		<input type="checkbox" name="housecard-5-martell" id="housecard-5-martell" />
+		<label for="housecard-5-martell"></label>
+		<input type="checkbox" name="housecard-6-martell" id="housecard-6-martell" />
+		<label for="housecard-6-martell"></label>
+    </div>
+    <input type="radio" name="navContentControl" id="starkStuff"/>
+    <div class="navContent">
+        <label class="fullwidth">
+            Units:
+            <textarea name="units-stark">Winterfell: Footman, Knight
+White Harbor: Footman
+The Shivering Sea: Ship</textarea>
+        </label>
+        <label class="fullwidth">
+            Orders:
+            <textarea name="orders-stark"></textarea>
+        </label>
+        <label class="fullwidth">
+            Powertokens in Areas:
+            <textarea name="powertokens-stark"></textarea>
+        </label>
+        <label class="fullwidth">
+            Available Power Tokens:
+            <input name="availablePowertokens-stark" type="number" min="0" max="20" step="1" value="5"/>
+        </label>
+		<input type="checkbox" name="housecard-0-stark" id="housecard-0-stark" />
+		<label for="housecard-0-stark"></label>
+		<input type="checkbox" name="housecard-1-stark" id="housecard-1-stark" />
+		<label for="housecard-1-stark"></label>
+		<input type="checkbox" name="housecard-2-stark" id="housecard-2-stark" />
+		<label for="housecard-2-stark"></label>
+		<input type="checkbox" name="housecard-3-stark" id="housecard-3-stark" />
+		<label for="housecard-3-stark"></label>
+		<input type="checkbox" name="housecard-4-stark" id="housecard-4-stark" />
+		<label for="housecard-4-stark"></label>
+		<input type="checkbox" name="housecard-5-stark" id="housecard-5-stark" />
+		<label for="housecard-5-stark"></label>
+		<input type="checkbox" name="housecard-6-stark" id="housecard-6-stark" />
+		<label for="housecard-6-stark"></label>
+    </div>
+    <input type="radio" name="navContentControl" id="tyrellStuff"/>
+    <div class="navContent">
+        <label class="fullwidth">
+            Units:
+            <textarea name="units-tyrell">Highgarden: Footman, Knight
+Dornish Marches: Footman
+Redwyne Straights: Ship</textarea>
+        </label>
+        <label class="fullwidth">
+            Orders:
+            <textarea name="orders-tyrell"></textarea>
+        </label>
+        <label class="fullwidth">
+            Powertokens in Areas:
+            <textarea name="powertokens-tyrell"></textarea>
+        </label>
+        <label class="fullwidth">
+            Available Power Tokens:
+            <input name="availablePowertokens-tyrell" type="number" min="0" max="20" step="1" value="5"/>
+        </label>
+		<input type="checkbox" name="housecard-0-tyrell" id="housecard-0-tyrell" />
+		<label for="housecard-0-tyrell"></label>
+		<input type="checkbox" name="housecard-1-tyrell" id="housecard-1-tyrell" />
+		<label for="housecard-1-tyrell"></label>
+		<input type="checkbox" name="housecard-2-tyrell" id="housecard-2-tyrell" />
+		<label for="housecard-2-tyrell"></label>
+		<input type="checkbox" name="housecard-3-tyrell" id="housecard-3-tyrell" />
+		<label for="housecard-3-tyrell"></label>
+		<input type="checkbox" name="housecard-4-tyrell" id="housecard-4-tyrell" />
+		<label for="housecard-4-tyrell"></label>
+		<input type="checkbox" name="housecard-5-tyrell" id="housecard-5-tyrell" />
+		<label for="housecard-5-tyrell"></label>
+		<input type="checkbox" name="housecard-6-tyrell" id="housecard-6-tyrell" />
+		<label for="housecard-6-tyrell"></label>
+    </div>
+</div>
+<div class="board">
+    <input type="checkbox" id="toggleUnits" checked="checked"/>
+    <input type="checkbox" id="toggleOrders" checked="checked"/>
+    <input type="checkbox" id="togglePowertokens" checked="checked"/>
+    
+</div>
+  
+</body>
+
+
+</html>
+
+ 
