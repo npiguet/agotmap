@@ -1388,6 +1388,346 @@ input[type="checkbox"][name^="housecard-"]:checked + label {
 
 <script type='text/javascript'>//<![CDATA[ 
 $(window).load(function(){
+
+
+var LZString = {
+
+  writeBit : function(value, data) {
+    data.val = (data.val << 1) | value;
+    if (data.position == 15) {
+      data.position = 0;
+      data.string += String.fromCharCode(data.val);
+      data.val = 0;
+    } else {
+      data.position++;
+    }
+  },
+  
+  writeBits : function(numBits, value, data) {
+    if (typeof(value)=="string")
+      value = value.charCodeAt(0);
+    for (var i=0 ; i<numBits ; i++) {
+      this.writeBit(value&1, data);
+      value = value >> 1;
+    }
+  },
+  
+  produceW : function (context) {
+    if (context.dictionaryToCreate.hasOwnProperty(context.w)) {
+      if (context.w.charCodeAt(0)<256) {
+        this.writeBits(context.numBits, 0, context.data);
+        this.writeBits(8, context.w, context.data);
+      } else {
+        this.writeBits(context.numBits, 1, context.data);
+        this.writeBits(16, context.w, context.data);
+      }
+      this.decrementEnlargeIn(context);
+      delete context.dictionaryToCreate[context.w];
+    } else {
+      this.writeBits(context.numBits, context.dictionary[context.w], context.data);
+    }
+    this.decrementEnlargeIn(context);
+  },
+  
+  decrementEnlargeIn : function(context) {
+    context.enlargeIn--;
+    if (context.enlargeIn == 0) {
+      context.enlargeIn = Math.pow(2, context.numBits);
+      context.numBits++;
+    }
+  },
+  
+  compress: function (uncompressed) {
+    var context = {
+      dictionary: {},
+      dictionaryToCreate: {},
+      c:"",
+      wc:"",
+      w:"",
+      enlargeIn: 2, 
+      dictSize: 3,
+      numBits: 2,
+      result: "",
+      data: {string:"", val:0, position:0}
+    }, i;
+    
+    for (i = 0; i < uncompressed.length; i += 1) {
+      context.c = uncompressed.charAt(i);
+      if (!context.dictionary.hasOwnProperty(context.c)) {
+        context.dictionary[context.c] = context.dictSize++;
+        context.dictionaryToCreate[context.c] = true;
+      }
+      
+      context.wc = context.w + context.c;
+      if (context.dictionary.hasOwnProperty(context.wc)) {
+        context.w = context.wc;
+      } else {
+        this.produceW(context);
+        context.dictionary[context.wc] = context.dictSize++;
+        context.w = String(context.c);
+      }
+    }
+    
+    if (context.w !== "") {
+      this.produceW(context);
+    }
+    
+    this.writeBits(context.numBits, 2, context.data);
+    
+    while (context.data.val>0) this.writeBit(0,context.data)
+    return context.data.string;
+  },
+  
+  readBit : function(data) {
+    var res = data.val & data.position;
+    data.position >>= 1;
+    if (data.position == 0) {
+      data.position = 32768;
+      data.val = data.string.charCodeAt(data.index++);
+    }
+    return res>0 ? 1 : 0;
+  },
+  
+  readBits : function(numBits, data) {
+    var res = 0;
+    var maxpower = Math.pow(2,numBits);
+    var power=1;
+    while (power!=maxpower) {
+      res |= this.readBit(data) * power;
+      power <<= 1;
+    }
+    return res;
+  },
+  
+  decompress: function (compressed) {
+    var dictionary = {},
+        next,
+        enlargeIn = 4,
+        dictSize = 4,
+        numBits = 3,
+        entry = "",
+        result = "",
+        w,
+        c,
+        errorCount=0,
+        literal,
+        data = {string:compressed, val:compressed.charCodeAt(0), position:32768, index:1};
+    
+    for (i = 0; i < 3; i += 1) {
+      dictionary[i] = i;
+    }
+    
+    next = this.readBits(2, data);
+    switch (next) {
+      case 0: 
+        c = String.fromCharCode(this.readBits(8, data));
+        break;
+      case 1: 
+        c = String.fromCharCode(this.readBits(16, data));
+        break;
+      case 2: 
+        return "";
+    }
+    dictionary[3] = c;
+    w = result = c;
+    while (true) {
+      c = this.readBits(numBits, data);
+      
+      switch (c) {
+        case 0: 
+          if (errorCount++ > 10000) return "Error";
+          c = String.fromCharCode(this.readBits(8, data));
+          dictionary[dictSize++] = c;
+          c = dictSize-1;
+          enlargeIn--;
+          break;
+        case 1: 
+          c = String.fromCharCode(this.readBits(16, data));
+          dictionary[dictSize++] = c;
+          c = dictSize-1;
+          enlargeIn--;
+          break;
+        case 2: 
+          return result;
+      }
+      
+      if (enlargeIn == 0) {
+        enlargeIn = Math.pow(2, numBits);
+        numBits++;
+      }
+
+      if (dictionary[c]) {
+        entry = dictionary[c];
+      } else {
+        if (c === dictSize) {
+          entry = w + w.charAt(0);
+        } else {
+          return null;
+        }
+      }
+      result += entry;
+      
+      dictionary[dictSize++] = w + entry.charAt(0);
+      enlargeIn--;
+      
+      w = entry;
+      
+      if (enlargeIn == 0) {
+        enlargeIn = Math.pow(2, numBits);
+        numBits++;
+      }
+      
+    }
+    return result;
+  }
+};
+
+var Base64 = {
+ 
+	// private property
+	_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+ 
+	// public method for encoding
+	encode : function (input) {
+		var output = "";
+		var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+		var i = 0;
+ 
+		input = Base64._utf8_encode(input);
+ 
+		while (i < input.length) {
+ 
+			chr1 = input.charCodeAt(i++);
+			chr2 = input.charCodeAt(i++);
+			chr3 = input.charCodeAt(i++);
+ 
+			enc1 = chr1 >> 2;
+			enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+			enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+			enc4 = chr3 & 63;
+ 
+			if (isNaN(chr2)) {
+				enc3 = enc4 = 64;
+			} else if (isNaN(chr3)) {
+				enc4 = 64;
+			}
+ 
+			output = output +
+			this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
+			this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+ 
+		}
+ 
+		return output;
+	},
+
+	urlSafeEncode : function(input) {
+		return Base64.encode(input).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, ".");
+	},
+ 
+	// public method for decoding
+	decode : function (input) {
+		var output = "";
+		var chr1, chr2, chr3;
+		var enc1, enc2, enc3, enc4;
+		var i = 0;
+ 
+		input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+ 
+		while (i < input.length) {
+ 
+			enc1 = this._keyStr.indexOf(input.charAt(i++));
+			enc2 = this._keyStr.indexOf(input.charAt(i++));
+			enc3 = this._keyStr.indexOf(input.charAt(i++));
+			enc4 = this._keyStr.indexOf(input.charAt(i++));
+ 
+			chr1 = (enc1 << 2) | (enc2 >> 4);
+			chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+			chr3 = ((enc3 & 3) << 6) | enc4;
+ 
+			output = output + String.fromCharCode(chr1);
+ 
+			if (enc3 != 64) {
+				output = output + String.fromCharCode(chr2);
+			}
+			if (enc4 != 64) {
+				output = output + String.fromCharCode(chr3);
+			}
+ 
+		}
+ 
+		output = Base64._utf8_decode(output);
+ 
+		return output;
+ 
+	},
+
+	urlSafeDecode : function(input) {
+		return Base64.decode(input.replace(/-/g, "+").replace(/_/g, "/").replace(/\./g, "="));
+	},
+ 
+	// private method for UTF-8 encoding
+	_utf8_encode : function (string) {
+		string = string.replace(/\r\n/g,"\n");
+		var utftext = "";
+ 
+		for (var n = 0; n < string.length; n++) {
+ 
+			var c = string.charCodeAt(n);
+ 
+			if (c < 128) {
+				utftext += String.fromCharCode(c);
+			}
+			else if((c > 127) && (c < 2048)) {
+				utftext += String.fromCharCode((c >> 6) | 192);
+				utftext += String.fromCharCode((c & 63) | 128);
+			}
+			else {
+				utftext += String.fromCharCode((c >> 12) | 224);
+				utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+				utftext += String.fromCharCode((c & 63) | 128);
+			}
+ 
+		}
+ 
+		return utftext;
+	},
+ 
+	// private method for UTF-8 decoding
+	_utf8_decode : function (utftext) {
+		var string = "";
+		var i = 0;
+		var c = c1 = c2 = 0;
+ 
+		while ( i < utftext.length ) {
+ 
+			c = utftext.charCodeAt(i);
+ 
+			if (c < 128) {
+				string += String.fromCharCode(c);
+				i++;
+			}
+			else if((c > 191) && (c < 224)) {
+				c2 = utftext.charCodeAt(i+1);
+				string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+				i += 2;
+			}
+			else {
+				c2 = utftext.charCodeAt(i+1);
+				c3 = utftext.charCodeAt(i+2);
+				string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+				i += 3;
+			}
+ 
+		}
+ 
+		return string;
+	}
+ 
+};
+
+
+
 var $board = $('.board'),
     setShortLink = function (href) {
         var characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
@@ -1742,8 +2082,15 @@ try {
     if (hash.indexOf('#') === 0) {
         hash = hash.substr(1);
     }
-    if (hash.length > 0) {
-        var conf = JSON.parse(decodeURIComponent(hash));
+    if (hash.length > 0) {var conf;
+		try {
+			// try to see if we already have JSON (from older versions of the link)
+			conf = JSON.parse(decodeURIComponent(hash));
+
+		} catch (e) {
+			// nope, lets do the decode and decompress routine
+			conf = JSON.parse(LZString.decompress(Base64.urlSafeDecode(hash)));
+		}
         setBoard(conf);
         setConf(conf);
     } else {
@@ -1754,7 +2101,8 @@ try {
 };
 // setting hash on form change
 $('.navContent :input').on('change', function () {
-    location.hash = encodeURIComponent(JSON.stringify(getConf()));
+	var hash = Base64.urlSafeEncode(LZString.compress(JSON.stringify(getConf())));
+    location.hash = hash;
 });
 // setting board and form on hash change
 $(window).on('hashchange', function () {
@@ -1762,7 +2110,18 @@ $(window).on('hashchange', function () {
     if (hash.indexOf('#') === 0) {
         hash = hash.substr(1);
     }
-    setConf(JSON.parse(decodeURIComponent(hash)));
+	
+	var conf;
+	try {
+		// try to see if we already have JSON (from older versions of the link)
+		conf = JSON.parse(decodeURIComponent(hash));
+
+	} catch (e) {
+		// nope, lets do the decode and decompress routine
+		conf = JSON.parse(LZString.decompress(Base64.urlSafeDecode(hash)));
+	}
+
+    setConf(conf);
     setBoard(getConf());
     setShortLink(location.href);
 });
@@ -2136,5 +2495,3 @@ Redwyne Straights: Ship</textarea>
 
 
 </html>
-
- 
