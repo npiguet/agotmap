@@ -30,7 +30,7 @@ q:before, q:after { content: ""; content: none; }
     position: relative;
     height: 2175px;
     width: 1464px;
-    background: url(http://cf.geekdo-images.com/images/pic1450365.png);
+    background: url(images/board.png);
 }
 
 .order-march-0,
@@ -129,7 +129,7 @@ q:before, q:after { content: ""; content: none; }
 .siege-greyjoy,
 .siege-tyrell,
 .siege-martell {
-    background: url(http://cf.geekdo-images.com/images/pic1450363.png) no-repeat;
+    background: url(images/tokens.png) no-repeat;
     width: 62px;
     height: 62px;
     position: absolute;
@@ -231,7 +231,7 @@ q:before, q:after { content: ""; content: none; }
     background-position: -682px 0;
 }
 .round {
-    background: url(http://cf.geekdo-images.com/images/pic1450366.png) no-repeat;
+    background: url(images/turn-marker.png) no-repeat;
     background-size: contain;
 }
 
