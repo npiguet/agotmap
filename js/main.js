@@ -82,13 +82,13 @@ var $board = $('.board'),
                     .replace(/ cp\*(\n|$)/ig, ' power-2$1')
                     .replace(/ m-1(\n|$)/ig, ' march-0$1')
                     .replace(/ m\+0(\n|$)/ig, ' march-1$1')
-                    .replace(/ m(\+1)?\*?(\n|$)/ig, ' march-2$1')
-                    .replace(/ r(aid)?(\n|$)/ig, ' raid-1$1')
-                    .replace(/ r(aid)?\*(\n|$)/ig, ' raid-2$1')
-                    .replace(/ d(efend)?(\+1)?(\n|$)/ig, ' defend-1$1')
-                    .replace(/ d(efend)?(\+2)?\*?(\n|$)/ig, ' defend-2$1')
-                    .replace(/ s(upport)?(\n|$)/ig, ' support-1$1')
-                    .replace(/ s(upport)?(\+1)?\*?(\n|$)/ig, ' support-2$1')
+                    .replace(/ m(\+1)?\*?(\n|$)/ig, ' march-2$2')
+                    .replace(/ r(aid)?(\n|$)/ig, ' raid-1$2')
+                    .replace(/ r(aid)?\*(\n|$)/ig, ' raid-2$2')
+                    .replace(/ d(efend)?(\+1)?(\n|$)/ig, ' defend-1$3')
+                    .replace(/ d(efend)?(\+2)?\*?(\n|$)/ig, ' defend-2$3')
+                    .replace(/ s(upport)?(\n|$)/ig, ' support-1$2')
+                    .replace(/ s(upport)?(\+1)?\*?(\n|$)/ig, ' support-2$3')
                     .split('\n');
                 for(var i = 0; i < value.length; i += 1) {
                     var valueSplitted = value[i].split(': '),
