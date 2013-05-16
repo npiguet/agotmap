@@ -30,7 +30,7 @@ q:before, q:after { content: ""; content: none; }
     position: relative;
     height: 2175px;
     width: 1464px;
-    background: url(images/board.png);
+    background: url(images/board.jpg);
 }
 
 .order-march-0,
